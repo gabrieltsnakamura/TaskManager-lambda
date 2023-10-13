@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
-from task_manager_lambda import app
+from task_manager_lambda.app import get_tasks, create_task, update_task, delete_task, build_response
 
 class TestApp(unittest.TestCase):
     @patch('app.get_mysql_connection')
@@ -20,7 +20,7 @@ class TestApp(unittest.TestCase):
 
         # Call the get_tasks function
         event = {"httpMethod": "GET", "path": "/user_tasks"}
-        result = app.get_tasks(event)
+        result = get_tasks(event)
 
         # Verify that the mock pymysql methods were called with the expected arguments
         mock_get_mysql_connection.assert_called_once()
@@ -29,5 +29,5 @@ class TestApp(unittest.TestCase):
         mock_cursor.fetchall.assert_called_once()
 
         # Verify that the result is as expected
-        expected_response = app.build_response(200, expected_result)
+        expected_response = build_response(200, expected_result)
         self.assertEqual(result, expected_response)
