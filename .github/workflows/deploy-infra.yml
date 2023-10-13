@@ -9,7 +9,8 @@ on:
     types: [submitted]
 
 jobs:
-  build_lamda_python:
+  Build-Lambda:
+    name: Build Lambda
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,6 +20,7 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: |
+          cd src/task_manager_lambda
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Test with pytest
