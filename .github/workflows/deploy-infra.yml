@@ -20,10 +20,10 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: |
-          cd src/task_manager_lambda
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r src/task_manager_lambda/requirements.txt
       - name: Test with pytest
         run: |
+          pip install -r tests/unit/requirements.txt
           pytest
       
