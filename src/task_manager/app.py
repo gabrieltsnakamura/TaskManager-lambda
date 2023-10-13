@@ -1,6 +1,12 @@
 import json
 import pymsql
 import logging
+import os
+
+host = os.environ.get('DB_HOST')
+user = os.environ.get('DB_USER')
+password = os.environ.get('DB_PASSWORD')
+database = os.environ.get('DB_DATABASE')
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -106,7 +112,7 @@ def build_response(statusCode, body=None):
 
 def get_mysql_connection():
     try:
-        conn = pymysql.connect(host='localhost', user='root', password='password', db='todo', charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+        conn = pymysql.connect(host, user=user, passwd=password, db=database, cursorclass=pymysql.cursors.DictCursor)
         return conn
     except Exception as error:
         logger.exception("Error: connection to RDS could not be established {}".format(error))
