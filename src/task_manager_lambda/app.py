@@ -1,5 +1,5 @@
 import json
-import pymsql
+import pymysql
 import logging
 import os
 
