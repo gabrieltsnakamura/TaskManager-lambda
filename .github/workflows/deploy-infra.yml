@@ -24,6 +24,6 @@ jobs:
           pip install -r src/task_manager_lambda/requirements.txt
       - name: Test with pytest
         run: |
-          pip install -r tests/unit/requirements.txt
+          pip install -r tests/requirements.txt
           pytest
       
