@@ -42,6 +42,8 @@ jobs:
           mkdir packages
           python -m pip install --upgrade pip
           pip install --target ./packages -r src/requirements.txt
+      - name: Zip dependencies
+        run: |
           cd packages
           zip -r ../packages.zip .
       - name: Zip Lambda
