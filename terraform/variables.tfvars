@@ -6,3 +6,4 @@ backend_s3_region = "sa-east-1"
 # Lambda configuration
 lambda_function_name = "task-manager-lambda"
 lambda_handler = "task-manager-lambda.handler"
+lambda_filename = "lambda_deployment.zip"

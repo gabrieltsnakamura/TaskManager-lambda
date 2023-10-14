@@ -1,4 +1,4 @@
-name: Lambda Deploy
+name: Package Lambda
 
 on:
   push:
@@ -15,39 +15,53 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r src/requirements.txt
+
       - name: Test with Unittest
         run: |
           python -m unittest discover tests
+
   Zip-Lambda:
+    needs: Test-Lambda
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    name: Zip Lambda
+    name: Package Lambda
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
+
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
+
       - name: Install and zip dependencies
         run: |
           mkdir packages
           python -m pip install --upgrade pip
           pip install --target ./packages -r src/requirements.txt
+
       - name: Zip dependencies
         run: |
           cd packages
           zip -r ../lambda_deployment.zip .
+
       - name: Zip Lambda
         run: |
           cd src
           zip ../lambda_deployment.zip task_manager_lambda.py
-      
+          
+      - name: Upload Zip
+        uses: actions/upload-artifact@v3
+        with:
+          name: lambda_deployment
+          path: lambda_deployment.zip
