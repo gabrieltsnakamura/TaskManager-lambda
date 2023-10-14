@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
-      - name: Install dependencies
+      - name: Install and zip dependencies
         run: |
           mkdir packages
           python -m pip install --upgrade pip
@@ -46,6 +46,6 @@ jobs:
           zip -r ../packages.zip .
       - name: Zip Lambda
         run: |
-          cd ../src
+          cd src
           zip ../packages.zip lambda_function.py
       
