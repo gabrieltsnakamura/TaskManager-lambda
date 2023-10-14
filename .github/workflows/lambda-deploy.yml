@@ -102,7 +102,7 @@ jobs:
 
       - name: Terraform Plan
         working-directory: ./terraform
-        run: terraform plan -input=false
+        run: terraform plan -var-file=variables.tfvars -input=false
 
       - name: Terraform Apply
         working-directory: ./terraform
