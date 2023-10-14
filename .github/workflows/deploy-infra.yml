@@ -10,7 +10,7 @@ on:
 
 jobs:
   Test-Lambda:
-    name: Test Lambda
+    name: Lambda Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -25,5 +25,5 @@ jobs:
           pip install -r src/requirements.txt
       - name: Test with Unittest
         run: |
-          python -m unittest discover src/tests
+          python -m unittest discover tests
       
