@@ -48,8 +48,8 @@ def get_tasks(event):
                 'status': user_tasks[i][3],
                 'date': user_tasks[i][4]
         }
-        user_tasks_list.append(user_task_obj)
-        build_response(200, user_tasks_list)
+            user_tasks_list.append(user_task_obj)
+        return build_response(200, user_tasks_list)
     except Exception as error:
         logger.exception("Error: could not fetch tasks: {}".format(error))
         raise Exception("Error: could not fetch tasks: {}".format(error))
@@ -67,7 +67,7 @@ def create_task(event):
         cur.execute('INSERT INTO user_tasks (user_id, description, status, date) VALUES (%s, %s, %s, %s)', (user_id, description, status, date))
         conn.commit()
         cur.close()
-        build_response(200, "Task created successfully")
+        return build_response(200, "Task created successfully")
     except Exception as error:
         logger.exception("Error: could not create task: {}".format(error))
         raise Exception("Error: could not create task: {}".format(error))
@@ -85,7 +85,7 @@ def update_task(event):
         cur.execute('UPDATE user_tasks SET description = %s, status = %s, date = %s WHERE user_id = %s', (description, status, date, user_id))
         conn.commit()
         cur.close()
-        build_response(200, "Task updated successfully")
+        return build_response(200, "Task updated successfully")
     except Exception as error:
         logger.exception("Error: could not update task: {}".format(error))
         raise Exception("Error: could not update task: {}".format(error))
@@ -99,7 +99,7 @@ def delete_task(event):
         cur.execute('DELETE FROM user_tasks WHERE user_id = %s', (user_id))
         conn.commit()
         cur.close()
-        build_response(200, "Task deleted successfully")
+        return build_response(200, "Task deleted successfully")
     except Exception as error:
         logger.exception("Error: could not delete task: {}".format(error))
         raise Exception("Error: could not delete task: {}".format(error))
