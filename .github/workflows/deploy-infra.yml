@@ -45,9 +45,9 @@ jobs:
       - name: Zip dependencies
         run: |
           cd packages
-          zip -r ../packages.zip .
+          zip -r ../lambda_deployment.zip .
       - name: Zip Lambda
         run: |
           cd src
-          zip ../packages.zip lambda_function.py
+          zip ../lambda_deployment.zip task_manager_lambda.py
       
