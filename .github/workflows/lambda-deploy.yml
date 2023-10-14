@@ -82,6 +82,9 @@ jobs:
         with:
           name: lambda_deployment
 
+      - name : Move Lambda Package
+        run: mv lambda_deployment.zip terraform
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
