@@ -9,10 +9,12 @@ on:
     types: [submitted]
 
 jobs:
-  build_lamda_python:
+  Test-Lambda:
+    name: Lambda Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
       - name: Set up Python 3.7
         uses: actions/setup-python@v2
         with:
@@ -20,8 +22,30 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      - name: Test with pytest
+          pip install -r src/requirements.txt
+      - name: Test with Unittest
         run: |
-          pytest
+          python -m unittest discover tests
+  Zip-Lambda:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    name: Zip Lambda
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: |
+          mkdir packages
+          python -m pip install --upgrade pip
+          pip install --target ./packages -r src/requirements.txt
+          cd packages
+          zip -r ../packages.zip .
+      - name: Zip Lambda
+        run: |
+          cd ../src
+          zip ../packages.zip lambda_function.py
       
