@@ -35,3 +35,16 @@ resource "aws_lambda_permission" "task_manager_lambda_permission" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.task_manager_api_gateway.execution_arn}/*/*/*"
 }
+
+# Create a deployment for the API
+resource "aws_api_gateway_deployment" "deployment" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  stage_name  = "prod"
+}
+
+# Create a stage for the deployment
+resource "aws_api_gateway_stage" "stage" {
+  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+  deployment_id = aws_api_gateway_deployment.deployment.id
+  stage_name = "prod"
+}
