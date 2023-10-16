@@ -11,7 +11,7 @@ resource "aws_api_gateway_resource" "task_manager_api_gateway_resource" {
 }
 
 # Create a method for the resource
-resource "aws_api_gateway_method" "task_manager_api_gateway_method_delete" {
+resource "aws_api_gateway_method" "task_manager_api_gateway_method" {
   rest_api_id   = aws_api_gateway_rest_api.task_manager_api_gateway.id
   resource_id   = aws_api_gateway_resource.task_manager_api_gateway_resource.id
   http_method   = "ANY"
@@ -19,22 +19,39 @@ resource "aws_api_gateway_method" "task_manager_api_gateway_method_delete" {
 }
 
 # Create an integration for the method
-resource "aws_api_gateway_integration" "integration_delete" {
+resource "aws_api_gateway_integration" "integration" {
   rest_api_id             = aws_api_gateway_rest_api.task_manager_api_gateway.id
   resource_id             = aws_api_gateway_resource.task_manager_api_gateway_resource.id
-  http_method             = aws_api_gateway_method.task_manager_api_gateway_method_delete.http_method
-  integration_http_method = "ANY"
+  http_method             = aws_api_gateway_method.task_manager_api_gateway_method.http_method
+  integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.task_manager_lambda1.invoke_arn
 }
 
+# Create a method for the resource
+resource "aws_api_gateway_method" "task_manager_api_gateway_method_root" {
+  rest_api_id   = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  resource_id   = aws_api_gateway_resource.task_manager_api_gateway_resource.id
+  http_method   = "ANY"
+  authorization = "NONE"
+}
+
+# Create an integration for the method
+resource "aws_api_gateway_integration" "integration_root" {
+  rest_api_id             = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  resource_id             = aws_api_gateway_resource.task_manager_api_gateway_resource.id
+  http_method             = aws_api_gateway_method.task_manager_api_gateway_method_root.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.task_manager_lambda1.invoke_arn
+}
 
 resource "aws_lambda_permission" "task_manager_lambda_permission" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.task_manager_lambda1.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.task_manager_api_gateway.execution_arn}/*/*/*"
+  source_arn    = "${aws_api_gateway_rest_api.task_manager_api_gateway.execution_arn}/*/*"
 }
 
 # Create a deployment for the API
