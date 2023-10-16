@@ -245,3 +245,7 @@ $RECYCLE.BIN/
 
 samconfig.toml
 template.yaml
+
+# Terraform
+.terraform/
+.terraform*
