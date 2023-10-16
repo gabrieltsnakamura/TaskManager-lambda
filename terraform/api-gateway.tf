@@ -25,13 +25,13 @@ resource "aws_api_gateway_integration" "integration" {
   http_method             = aws_api_gateway_method.task_manager_api_gateway_method.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
-  uri                     = aws_lambda_function.task_manager_lambda.invoke_arn
+  uri                     = aws_lambda_function.task_manager_lambda1.invoke_arn
 }
 
 resource "aws_lambda_permission" "task_manager_lambda_permission" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.task_manager_lambda.function_name
+  function_name = aws_lambda_function.task_manager_lambda1.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.task_manager_api_gateway.execution_arn}/*/*/*"
 }
