@@ -112,7 +112,7 @@ def build_response(statusCode, body=None):
 
 def get_mysql_connection():
     try:
-        conn = pymysql.connect(host, user=user, password=password, db=database, cursorclass=pymysql.cursors.DictCursor)
+        conn = pymysql.connect(host=host, user=user, password=password, db=database, cursorclass=pymysql.cursors.DictCursor)
         return conn
     except Exception as error:
         logger.exception("Error: connection to RDS could not be established {}".format(error))
