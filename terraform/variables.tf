@@ -14,3 +14,13 @@ variable "lambda_handler" {
   default     = "task-manager-lambda.handler"
 }
 
+variable "subnet_ids" {
+  type        = list(string)
+  description = "The list of subnet ids"
+}
+
+variable "vpc_id" {
+  type        = string
+  description = "The id of the vpc"
+}
+
