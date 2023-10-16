@@ -9,7 +9,7 @@ data "aws_iam_policy_document" "task_manager_lambda_logging" {
       "ec2:*"
     ]
 
-    resources = ["arn:aws:logs:*:*:*"]
+    resources = ["*"]
   }
 }
 

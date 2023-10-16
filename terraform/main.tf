@@ -17,30 +17,7 @@ provider "aws" {
 }
 
 
-resource "aws_security_group" "lambda_security_group" {
-  name_prefix = "lambda-security-group-"
-  vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = 0
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_lambda_function" "task_manager_lambda1" {
-  vpc_config {
-    subnet_ids         = var.subnet_ids
-    security_group_ids = [aws_security_group.lambda_security_group.id]
-  }
   filename         = var.lambda_filename
   function_name    = var.lambda_function_name
   role             = aws_iam_role.task_manager_lambda_role.arn
