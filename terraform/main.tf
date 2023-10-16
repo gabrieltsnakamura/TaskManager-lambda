@@ -39,7 +39,7 @@ resource "aws_security_group" "lambda_security_group" {
 resource "aws_lambda_function" "task_manager_lambda" {
   vpc_config {
     subnet_ids         = var.subnet_ids
-    security_group_ids = ["sg-0e3e1c7b9e3e1c7b9"]
+    security_group_ids = [aws_security_group.lambda_security_group.id]
   }
   filename         = var.lambda_filename
   function_name    = var.lambda_function_name
