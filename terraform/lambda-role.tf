@@ -6,6 +6,7 @@ data "aws_iam_policy_document" "task_manager_lambda_logging" {
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",
+      "ec2:*"
     ]
 
     resources = ["arn:aws:logs:*:*:*"]
