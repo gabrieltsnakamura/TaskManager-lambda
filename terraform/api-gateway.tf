@@ -73,7 +73,7 @@ resource "aws_api_gateway_method" "task_manager_api_gateway_method_delete" {
 }
 
 # Create an integration for the method
-resource "aws_api_gateway_integration" "integration_put" {
+resource "aws_api_gateway_integration" "integration_delete" {
   rest_api_id             = aws_api_gateway_rest_api.task_manager_api_gateway.id
   resource_id             = aws_api_gateway_resource.task_manager_api_gateway_resource.id
   http_method             = aws_api_gateway_method.task_manager_api_gateway_method_delete.http_method
