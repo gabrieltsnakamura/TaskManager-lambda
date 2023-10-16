@@ -37,14 +37,14 @@ resource "aws_lambda_permission" "task_manager_lambda_permission" {
 }
 
 # Create a deployment for the API
-resource "aws_api_gateway_deployment" "deployment" {
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
+resource "aws_api_gateway_deployment" "task_manager_deployment" {
+  rest_api_id = aws_api_gateway_rest_api.task_manager_api_gateway.id
   stage_name  = "prod"
 }
 
 # Create a stage for the deployment
-resource "aws_api_gateway_stage" "stage" {
-  rest_api_id = aws_api_gateway_rest_api.api_gateway.id
-  deployment_id = aws_api_gateway_deployment.deployment.id
+resource "aws_api_gateway_stage" "task_manager_stage" {
+  rest_api_id = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  deployment_id = aws_api_gateway_deployment.task_manager_deployment.id
   stage_name = "prod"
 }
