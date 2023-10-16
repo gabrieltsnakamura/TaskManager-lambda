@@ -23,10 +23,65 @@ resource "aws_api_gateway_integration" "integration" {
   rest_api_id             = aws_api_gateway_rest_api.task_manager_api_gateway.id
   resource_id             = aws_api_gateway_resource.task_manager_api_gateway_resource.id
   http_method             = aws_api_gateway_method.task_manager_api_gateway_method.http_method
+  integration_http_method = "GET"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.task_manager_lambda1.invoke_arn
+}
+
+# Create a method for the resource
+resource "aws_api_gateway_method" "task_manager_api_gateway_method_post" {
+  rest_api_id   = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  resource_id   = aws_api_gateway_resource.task_manager_api_gateway_resource.id
+  http_method   = "POST"
+  authorization = "NONE"
+}
+
+# Create an integration for the method
+resource "aws_api_gateway_integration" "integration_post" {
+  rest_api_id             = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  resource_id             = aws_api_gateway_resource.task_manager_api_gateway_resource.id
+  http_method             = aws_api_gateway_method.task_manager_api_gateway_method_post.http_method
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
   uri                     = aws_lambda_function.task_manager_lambda1.invoke_arn
 }
+
+# Create a method for the resource
+resource "aws_api_gateway_method" "task_manager_api_gateway_method_put" {
+  rest_api_id   = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  resource_id   = aws_api_gateway_resource.task_manager_api_gateway_resource.id
+  http_method   = "PUT"
+  authorization = "NONE"
+}
+
+# Create an integration for the method
+resource "aws_api_gateway_integration" "integration_put" {
+  rest_api_id             = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  resource_id             = aws_api_gateway_resource.task_manager_api_gateway_resource.id
+  http_method             = aws_api_gateway_method.task_manager_api_gateway_method_put.http_method
+  integration_http_method = "PUT"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.task_manager_lambda1.invoke_arn
+}
+
+# Create a method for the resource
+resource "aws_api_gateway_method" "task_manager_api_gateway_method_delete" {
+  rest_api_id   = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  resource_id   = aws_api_gateway_resource.task_manager_api_gateway_resource.id
+  http_method   = "DELETE"
+  authorization = "NONE"
+}
+
+# Create an integration for the method
+resource "aws_api_gateway_integration" "integration_put" {
+  rest_api_id             = aws_api_gateway_rest_api.task_manager_api_gateway.id
+  resource_id             = aws_api_gateway_resource.task_manager_api_gateway_resource.id
+  http_method             = aws_api_gateway_method.task_manager_api_gateway_method_delete.http_method
+  integration_http_method = "DELETE"
+  type                    = "AWS_PROXY"
+  uri                     = aws_lambda_function.task_manager_lambda1.invoke_arn
+}
+
 
 resource "aws_lambda_permission" "task_manager_lambda_permission" {
   statement_id  = "AllowAPIGatewayInvoke"
